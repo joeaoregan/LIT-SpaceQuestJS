@@ -1,27 +1,41 @@
-<!DOCTYPE html> 
-<html lang="en"> 
-	<head>			
-		<meta charset="UTF-8">
-		<title>Space Quest JS</title>		
-				
-		<!--[if lt IE 9]>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Space Quest JS</title>
+
+	<!--[if lt IE 9]>
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
 
-		<link href="css/styles.css" rel="stylesheet" />
-	</head>
+	<link href="css/styles.css" rel="stylesheet" />
+</head>
 
-	<body>
-		<h1>Space Quest JavaScript</h1>
-					
+<body>
+	<h1>Space Quest JavaScript</h1>
+
+	<div>
 		<canvas id="spacequest" width="1280" height="720"></canvas>
-		<script src="HUD.js"></script>
-		<script src="GameObject.js"></script>
-		<script src="Asteroid.js"></script>
-		<script src="Background.js"></script>
-		<script src="Laser.js"></script>
-		<script src="Player.js"></script>
-		<script src="Game.js"></script>
-	</body>
+	</div>
+
+	<div>
+		<h1>Info</h1>
+		<h2>Press Esc / P to start</h2>
+		<ul>
+			<li>Move: asdw + arrow keys</li>
+			<li>Fire: space</li>
+			<li>Pause: Esc / P</li>
+			<li>Health: 10, Lives: 3</li>
+		</ul>
+	</div>
+	<script src="HUD.js"></script>
+	<script src="GameObject.js"></script>
+	<script src="Asteroid.js"></script>
+	<script src="Background.js"></script>
+	<script src="Laser.js"></script>
+	<script src="Player.js"></script>
+	<script src="Game.js"></script>
+</body>
 
 </html>
