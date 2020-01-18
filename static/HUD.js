@@ -30,7 +30,7 @@ const spaceQuestTxt = {
         ctx.fillText(this.level, 20, 50);
         ctx.strokeText(this.level, 20, 50);
 
-        this.scoreTxt = "Score: " + this.score;
+        this.scoreTxt = "Score: " + gameInstance.score;
         this.textWidth = ctx.measureText(this.scoreTxt).width;
         ctx.fillText(this.scoreTxt, (canvas.width / 2) - (this.textWidth / 2), 50);
         ctx.strokeText(this.scoreTxt, (canvas.width / 2) - (this.textWidth / 2), 50);

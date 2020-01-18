@@ -6,6 +6,30 @@ const SCREEN_HEIGHT = 720;
 var gameobjects = [];
 var paused = true;
 var mute = false;
+//var score = 0;
+
+var gameInstance;
+
+class Game {
+    constructor() {
+        this.score = 0;
+    }
+
+    create(){        
+        if (!gameInstance) {
+            gameInstance = new Game();
+        }
+        return gameInstance;
+    }
+
+    get() {
+        if (!gameInstance) {
+            gameInstance = new Game();
+        }
+        return gameInstance;
+    }
+}
+gameInstance = new Game();
 
 function init() {
     console.log("init game");

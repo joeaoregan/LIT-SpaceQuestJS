@@ -51,6 +51,9 @@ class Asteroid extends GameObject {
 
     destroy() {
         if (!mute) this.fx.play();//Explosion sound if not muted
+        //Game.prototype.score +=10;
+        //gameInstance.score+=10;
+        Game.prototype.get().score += 10;
         this.reset();
     }
 }
