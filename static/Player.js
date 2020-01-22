@@ -3,7 +3,7 @@ Player.js
 Joe O'Regan
 18/01/2020
 */
-const MAX_HEALTH = 10;
+const MAX_HEALTH = 5;
 const MAX_LIVES = 3;
 const HEALTHBAR_W = 75;
 const HEALTHBAR_H = 10;
@@ -18,24 +18,22 @@ const damageFX = new Audio();
 damageFX.src = "sfx/damage.wav";
 
 class Player extends GameObject {
-    // instance; // not sure how to access here
     constructor(img, x, y, w, h) {
         super(img, x, y, w, h);
         this.reset(x, y);
         this.speed = 5;
         this.fireRate = 0;
         this.lastFire = 0;
-        this.fireDelay = 0;
-        //this.health=MAX_HEALTH;
+        this.fireDelay = 20;
+        this.health = 5;
         this.flashing = false;
-
+        this.lives = MAX_LIVES;
     }
 
     createInstance(img, x, y, w, h) {
         if (!playerInstance) {
             playerInstance = new Player(img, x, y, w, h);
         }
-
         return playerInstance;
     }
 
@@ -44,12 +42,12 @@ class Player extends GameObject {
     }
 
     fire() {
-        console.log("fire");
+        // console.log("fire");
         if (this.fireRate > this.lastFire + this.fireDelay) {
             var x = new Laser("img/BlueLaser.png", this.x + this.w - 20, this.y + this.h / 2);
-            gameobjects.push(x);
+            game.state.objects.push(x);
             //console.log('lasers'+lasers.length);
-            if (!mute) fireFX.play();
+            if (!game.mute) fireFX.play();
             this.lastFire = this.fireRate;
             //console.log('fireRate: '+this.fireRate+' lastFire: '+this.lastFire);
         }
@@ -80,18 +78,14 @@ class Player extends GameObject {
             } else {
                 this.lives--;
                 // console.log('Player Life Lost - Lives: ', this.lives);
+                if (this.lives <= 0) game.over = true;
                 if (this.lives > 0) {//decrease lives
                     // this.flashThisMany(5);
                     this.health = MAX_HEALTH;//increase health
                 }
             }
         }
-        /*
-                if (this.lives <= 0) {
-                    state.current = state.over;
-                    this.reset();
-                }
-        
+        /*        
                 if (this.lives == 1) {
                     spawnLife();
                 }
@@ -106,6 +100,7 @@ class Player extends GameObject {
     }
 
     update() {
+        this.move();
         this.fireRate++;
         this.x += this.dx;
         this.y += this.dy;
@@ -121,29 +116,54 @@ class Player extends GameObject {
             this.y = SCREEN_HEIGHT - this.h;
         }
 
-
-        
-        for (var i = 0; i < gameobjects.length; i++) {                        
-            for (var j = 0; j < gameobjects.length; j++) {
-                if (gameobjects[i] === gameobjects[j]) continue;
-                if (gameobjects[i] === this && gameobjects[j].constructor.name === "Asteroid" && (collision(gameobjects[i], gameobjects[j]))) {
+        // Collisions
+        for (var i = 0; i < game.state.objects.length; i++) {
+            for (var j = 0; j < game.state.objects.length; j++) {
+                if (game.state.objects[i] === game.state.objects[j]) continue;
+                if (game.state.objects[i] === this && game.state.objects[j].constructor.name === "Asteroid" && (collision(game.state.objects[i], game.state.objects[j]))) {
                     /*
                     // lasers.splice(i, 1);
                     var ex = new explosion(this.x + this.w, this.y - bloodcells[j].h, 128, 16, 'ExplosionBlood'); // create explosion
                     explosions.push(ex);
-                    if (!mute) splashFX.play();
+                    if (!game.mute) splashFX.play();
                     // bloodcells[j].reset();
  
                     bloodcellsDestroyed++;
                     navigator.vibrate([400, 100, 400]);//vibrate mobile device if bloodcell destroyed
                     */
-                    console.log("Player/Asteroid Collision");
+                    // console.log("Player/Asteroid Collision");
                     //gameobjects.splice(i, 1);//delete the laser from the game objects list
-                    gameobjects[i].updateHealth();
-                    gameobjects[j].destroy();//Reset the Asteroid
-                    //if(!mute) explosionLargeFX.play();
+                    game.state.objects[i].updateHealth();
+                    game.state.objects[j].destroy();//Reset the Asteroid
+                    //if(!game.mute) explosionLargeFX.play();
                 }
             }
+        }
+    }
+
+    move() {
+        // console.log("move player");
+        // X
+        if (controller.btn.left) {
+            playerInstance.dx = -playerInstance.speed;
+        } else if (controller.btn.right) {
+            playerInstance.dx = playerInstance.speed;
+        }
+        // Y
+        if (controller.btn.up) {
+            playerInstance.dy = -playerInstance.speed;
+        } else if (controller.btn.down) {
+            playerInstance.dy = playerInstance.speed;
+        }
+        if (!controller.btn.left && !controller.btn.right) {
+            playerInstance.dx = 0;
+        }
+        if (!controller.btn.up && !controller.btn.down) {
+            playerInstance.dy = 0;
+        }
+
+        if (controller.btn.fire) {
+            this.fire();
         }
     }
 
@@ -152,67 +172,4 @@ class Player extends GameObject {
     }
 }
 
-var p = Player.prototype.getInstance.call(this);
-// Keyboard Controls
-window.addEventListener('keydown', function (e) {
-    switch (e.keyCode) {
-        case 65: // A
-        case 37: // Left
-        case 100: // 4
-            //player.dx = -ship.speed;
-            playerInstance.dx = -playerInstance.speed;
-            e.preventDefault();
-            //console.log('Left');
-            break;
-        case 87: // W
-        case 38: // Up
-        case 104: // 8
-            // player.dy = -ship.speed;
-            playerInstance.dy = -playerInstance.speed;
-            e.preventDefault();
-            //console.log('Up');
-            break;
-        case 68: // D
-        case 39: // Right
-        case 102: // 6
-            // player.dx = ship.speed;
-            playerInstance.dx = playerInstance.speed;
-            e.preventDefault();
-            //console.log('Right');
-            break;
-        case 83: // S
-        case 40: // Down
-        case 98: // 2
-            // player.dy = ship.speed;
-            playerInstance.dy = playerInstance.speed;
-            e.preventDefault();
-            //console.log('Down ' + ship.dy);
-            break;
-        case 32://space
-            playerInstance.fire();
-            break;
-    }
-}, false);
-
-document.addEventListener('keyup', function (event) {
-    switch (event.keyCode) {
-        case 65: // A
-        case 37: // Left
-        case 100: // 4
-        case 68: // D
-        case 39: // Right
-        case 102: // 6
-            // player.dx = 0;
-            playerInstance.dx = 0;
-            break;
-        case 87: // W
-        case 38: // Up
-        case 104: // 8
-        case 83: // S
-        case 40: // Down
-        case 98: // 2
-            // player.dy = 0;
-            playerInstance.dy = 0;
-            break;
-    }
-});
+//var p = Player.prototype.getInstance.call(this);

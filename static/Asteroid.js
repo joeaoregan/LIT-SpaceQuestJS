@@ -47,12 +47,15 @@ class Asteroid extends GameObject {
         this.w = this.w * this.scale;
         this.h = this.h * this.scale;
         // console.log("Asteroid Scale: " + this.scale);
+        game.totalAsteroids++;
+        // console.log("Total Asteroids: " + game.totalAsteroids);
     }
 
     destroy() {
-        if (!mute) this.fx.play();//Explosion sound if not muted
+        if (!game.mute) this.fx.play();//Explosion sound if not muted
         //Game.prototype.score +=10;
         //gameInstance.score+=10;
+        game.destroyedAsteroids++;
         Game.prototype.get().score += 10;
         this.reset();
     }

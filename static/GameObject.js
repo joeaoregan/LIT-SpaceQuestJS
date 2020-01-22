@@ -17,10 +17,12 @@ class GameObject {
         this.dx = 0;
         this.dy = 0;
         this.sprite = new Image();
-        this.sprite.src = img || "img/background/bg_front_spacedust1080L2.png";
+        this.sprite.src = img || "img/bg/bg_front_spacedust1080L2.png";
         this.fx = new Audio();
-        this.health=10;
-        this.lives=3;
+        // this.health = 10;
+        this.lives = 3;
+        // this.id="";
+        this.speed = 0;
     }
 
     init() {
@@ -34,12 +36,15 @@ class GameObject {
 
     update() {
         //this.x = (this.x - this.dx) % (this.w);
+        if (this.speed > 0) {
+            this.x -= this.speed;
+        }
     }
 
-    reset(x,y) {
+    reset(x, y) {
         this.x = x || 0;
         this.y = y || 0;
-        this.dx=0;
-        this.dy=0;
+        this.dx = 0;
+        this.dy = 0;
     }
 }

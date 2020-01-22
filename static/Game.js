@@ -1,74 +1,62 @@
 const canvas = document.getElementById("spacequest");
 const ctx = canvas.getContext("2d");
-const SCREEN_WIDTH = 1280;
+const SCREEN_WIDTH = 1280; // Canvas/screen dimensions
 const SCREEN_HEIGHT = 720;
-
-var gameobjects = [];
-var paused = true;
-var mute = false;
-//var score = 0;
-
-var gameInstance;
+const STATE_MENU = 0; // Game states
+const STATE_LEVEL1 = 1;
+const STATE_LEVEL2 = 2;
+const STATE_LEVEL3 = 3;
+const STATE_LEVEL4 = 4;
+const STATE_OVER = 5;
+const STATE_TRANSITION = 6;
+const STATE_SPLASH = 7;
+const LEVEL_TIME = 3; // Length of each level
 
 class Game {
-    constructor() {
+    constructor(level) {
         this.score = 0;
+        this.paused = false;
+        this.level = level || STATE_SPLASH; // start at menu
+        this.mute = false;
+        this.destroyedAsteroids = 0;
+        this.destroyedEnemies = 0;
+        this.totalAsteroids = 0;
+        this.totalEnemies = 0;
+        this.over = false;
+        this.state = new Splash();
     }
 
-    create(){        
-        if (!gameInstance) {
-            gameInstance = new Game();
+    create() {
+        if (!game) {
+            game = new Game();
         }
-        return gameInstance;
+        return game;
     }
 
     get() {
-        if (!gameInstance) {
-            gameInstance = new Game();
+        if (!game) {
+            game = new Game();
         }
-        return gameInstance;
+        return game;
     }
 }
-gameInstance = new Game();
 
-function init() {
-    console.log("init game");
-    var bg = new Background("img/bg/bg_front_spacedust1080L2.png", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    gameobjects.push(bg);
-    //bg.init();
-    for (var i = 0; i < 5; i++) {
-        var asteroid = new Asteroid("img/asteroid.png", 0, 0, 132, 180);
-        gameobjects.push(asteroid);
-    }
-    //var player = new Player("img/player.png", 25, 310, 135, 100);
-    //var player=Player.createInsance("img/player.png", 25, 310, 135, 100);
-    var player = Player.prototype.createInstance.call(this, "img/player.png", 25, 310, 135, 100);
-    gameobjects.push(player);
-
-    //gameobjects.forEach(obj => console.log(typeof obj));//all objects
-    console.log("bg: " + bg.constructor.name);
-}
-
-function update() {
-    gameobjects.forEach(obj => obj.update());
-}
-
-function draw() {
-    gameobjects.forEach(obj => obj.draw());
-    spaceQuestTxt.draw();
-}
+var game = new Game();
+var controller = new Controller();
 
 function loop() {
-    draw();
-    if (!paused) update();
-    requestAnimationFrame(loop);
+    game.state.draw();
+    if (!game.paused && !game.over) {
+        game.state.update();
+    }
+    requestAnimationFrame(loop); // Must be outside if statement to resume after pause
 }
 
-init();
+game.state.init();
 loop();
 
-//Check collisions between objects
 function collision(o1, o2) {
+    //Check collisions between objects
     return (o2.x < o1.x + o1.w &&
         o2.x + o2.w > o1.x &&
         o2.y < o1.y + o1.h &&
@@ -76,9 +64,9 @@ function collision(o1, o2) {
 }
 
 window.addEventListener('keydown', function (e) {
-    // P / Esc pauses game
-    if (e.keyCode == 80 || e.keyCode == 27) {
+    if (e.keyCode == 80 || e.keyCode == 27) {// P / Esc pauses game
         e.preventDefault();
-        paused = !paused;
+        game.paused = !game.paused;
+        console.log("pause")
     }
 }, false);
