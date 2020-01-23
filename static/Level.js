@@ -5,6 +5,7 @@ class Level extends State {
     }
 
     init(level) {
+        menu.init();
         this.time = 0;
         game.level = level || STATE_LEVEL1;
         console.log("Init Level " + game.level);
@@ -49,6 +50,12 @@ class Level extends State {
 
     draw() {
         this.objects.forEach(obj => obj.draw());
+        if (controller.btn.menu) {
+            console.log("menu pressed");
+            // Menu.prototype.update.call(this);
+            // Menu.prototype.update();
+            menu.draw();
+        }
     }
 
     update() {

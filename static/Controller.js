@@ -6,7 +6,8 @@ class Controller {
             down: false,
             left: false,
             right: false,
-            fire: false
+            fire: false,
+            menu: false
         };
 
         setInterval(
@@ -29,6 +30,7 @@ class Controller {
         this.btn.left = false;
         this.btn.right = false;
         this.btn.fire = false;
+        this.btn.menu = false;
     }
 }
 
@@ -68,6 +70,12 @@ window.addEventListener('keydown', function (e) {
             e.preventDefault();
             // console.log('Fire');
             break;
+        case 77:
+            controller.btn.menu = !controller.btn.menu; // toggle on/off
+            game.paused = !game.paused; // toggle the game paused
+            e.preventDefault();
+            // this.console.log("menu");
+            break;
     }
 }, false);
 
@@ -94,5 +102,8 @@ document.addEventListener('keyup', function (event) {
         case 32:
             controller.btn.fire = false;
             break
+        // case 77:
+        //     controller.btn.menu = false;
+        //     break;
     }
 });

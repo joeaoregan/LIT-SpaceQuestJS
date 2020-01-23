@@ -70,3 +70,5 @@ window.addEventListener('keydown', function (e) {
         console.log("pause")
     }
 }, false);
+
+var menu = new Menu();
