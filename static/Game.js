@@ -45,10 +45,10 @@ var game = new Game();
 var controller = new Controller();
 
 function loop() {
-    game.state.draw();
     if (!game.paused && !game.over) {
         game.state.update();
     }
+    game.state.draw();
     requestAnimationFrame(loop); // Must be outside if statement to resume after pause
 }
 
