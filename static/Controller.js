@@ -10,9 +10,17 @@ class Controller {
             menu: false
         };
 
-        setInterval(
-            this.timer.bind(this), 100
-        )
+        this.mouse = {
+            x: 0,
+            y: 0,
+            down: false,
+            up: false,
+            over: true,
+            overX: 0,
+            overY: 0
+        };
+
+        setInterval(this.timer.bind(this), 100);
     }
 
     timer() {
@@ -70,7 +78,7 @@ window.addEventListener('keydown', function (e) {
             e.preventDefault();
             // console.log('Fire');
             break;
-        case 77:
+        case 77: // Esc
             controller.btn.menu = !controller.btn.menu; // toggle on/off
             game.paused = !game.paused; // toggle the game paused
             e.preventDefault();
@@ -101,9 +109,29 @@ document.addEventListener('keyup', function (event) {
             break;
         case 32:
             controller.btn.fire = false;
-            break
-        // case 77:
-        //     controller.btn.menu = false;
-        //     break;
+            break;
     }
 });
+
+window.addEventListener('mouseup', function (e) {
+    const canvas = document.getElementById("spacequest");
+    const rect = canvas.getBoundingClientRect(); // Canvas offset
+    controller.mouse.x = Math.floor(e.pageX - rect.left);
+    controller.mouse.y = Math.floor(e.pageY - rect.top);
+    // controller.mouse.down = false;
+    console.log("Clicked x: " + controller.mouse.x + " y: " + controller.mouse.y);
+});
+// window.addEventListener('mousedown', function (e) {
+//     controller.mouse.down = true;
+// });
+window.addEventListener('mousemove', function (e) {
+    // controller.mouse.over = true;
+    const canvas = document.getElementById("spacequest");
+    const rect = canvas.getBoundingClientRect(); // Canvas offset
+    controller.mouse.overX = Math.floor(e.pageX - rect.left);
+    controller.mouse.overY = Math.floor(e.pageY - rect.top);
+    // console.log("OVER -- x: " + controller.mouse.overX + " y: " + controller.mouse.overY);
+});
+// window.addEventListener('mouseout', function (e) {
+//     controller.mouse.over = false;
+// });

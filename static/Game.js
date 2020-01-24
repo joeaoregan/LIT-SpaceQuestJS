@@ -39,6 +39,12 @@ class Game {
         }
         return game;
     }
+
+    pause(){
+        this.paused = !this.paused;
+        if (this.paused) console.log("Game Paused");
+        else console.log("Game Unpause");
+    }
 }
 
 var game = new Game();
@@ -66,8 +72,9 @@ function collision(o1, o2) {
 window.addEventListener('keydown', function (e) {
     if (e.keyCode == 80 || e.keyCode == 27) {// P / Esc pauses game
         e.preventDefault();
-        game.paused = !game.paused;
-        console.log("pause")
+        // game.paused = !game.paused;
+        // console.log("pause")
+        game.pause();
     }
 }, false);
 

@@ -2,6 +2,7 @@ const TOP_PANEL_Y = 55;
 const BOTTOM_PANEL_Y = 695;
 const PANEL_X = 20;
 const MENU_ICON = "\u2630";
+const PAUSE_ICON = "\u275A\u275A";
 
 class HUD extends GameObject {
     constructor(img, x, y, w, h) {
@@ -17,6 +18,44 @@ class HUD extends GameObject {
         this.life = new Image();
         this.life.src = "img/PlayerLifeNew2.png";
         this.overTxt = "Game Over!";
+        // this.menuHover = false;
+        this.menu = {
+            x: 0,
+            y: BOTTOM_PANEL_Y - 32,
+            w: 40,
+            h: 40
+        }
+    }
+
+    // menuHover(action) {
+    menuHover() {
+        if (controller.mouse.overX > this.menu.x
+            && controller.mouse.overX < this.menu.x + this.menu.w
+            && controller.mouse.overY > this.menu.y
+            && controller.mouse.overY < this.menu.y + this.menu.h
+        ) {
+            // return true;
+            ctx.beginPath();
+            ctx.strokeStyle = "#0F0";
+            ctx.rect(this.menu.x, this.menu.y, this.menu.w, this.menu.h);
+            ctx.stroke();
+            ctx.fillStyle = "#0F0";
+        }
+        ctx.strokeStyle = "#FFF";
+    }
+    
+    mouseClick() {
+        if (controller.mouse.x > this.menu.x
+            && controller.mouse.x < this.menu.x + this.menu.w
+            && controller.mouse.y > this.menu.y
+            && controller.mouse.y < this.menu.y + this.menu.h) {
+            // console.log("Clicked");
+            //if(action=="pause") game.paused=!game.paused;
+            // game.paused = !game.paused;
+            game.pause();
+            controller.mouse.x = controller.mouse.y = 0;
+        }
+        // return false;
     }
 
     draw() {
@@ -32,9 +71,33 @@ class HUD extends GameObject {
         ctx.fillText(this.titleTxt, (canvas.width / 2) - (this.textWidth / 2), BOTTOM_PANEL_Y); // Title
         ctx.strokeText(this.titleTxt, (canvas.width / 2) - (this.textWidth / 2), BOTTOM_PANEL_Y);
 
+        //ctx.strokeStyle = (this.menuHover) ? "#FFF" : "#0F0";
         this.textWidth = ctx.measureText(MENU_ICON).width;
+        this.menu.x = canvas.width - this.textWidth - PANEL_X - 4;
+        // this.me-uHover("");
+        this.menuHover();
         ctx.fillText(MENU_ICON, (canvas.width - this.textWidth - PANEL_X), BOTTOM_PANEL_Y);
         ctx.strokeText(MENU_ICON, (canvas.width - this.textWidth - PANEL_X), BOTTOM_PANEL_Y);
+        // ctx.strokeStyle = "#FFF";
+        ctx.fillStyle = "#F00";
+
+        // Pause
+        this.textWidth = ctx.measureText(PAUSE_ICON).width;
+        this.menu.x = canvas.width - this.textWidth - PANEL_X - 54;
+        // this.menuHover("pause");
+        this.menuHover();
+
+
+        // game.paused = 
+        this.mouseClick();
+
+
+        ctx.fillText(PAUSE_ICON, (canvas.width - this.textWidth - PANEL_X - 50), BOTTOM_PANEL_Y);
+        ctx.strokeText(PAUSE_ICON, (canvas.width - this.textWidth - PANEL_X - 50), BOTTOM_PANEL_Y);
+        // ctx.strokeStyle = "#FFF";
+        ctx.fillStyle = "#F00";
+
+        // Change menu icon colour on mouse hover
 
         for (var i = 1; i <= playerInstance.lives; i++) {
             if (playerInstance.lives >= i)
