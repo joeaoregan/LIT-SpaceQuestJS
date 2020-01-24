@@ -47,17 +47,17 @@ class Menu extends State {
             this.options.settings.src = "img/menu/btnSettings.png";
             this.options.exit.src = "img/menu/btnExit.png";
         } else if (this.selected == 1) {
-            this.options.start.src = "img/menu/btnStart.png";
+            this.options.start.src = "img/menu/btnStart1.png";
             this.options.highscores.src = "img/menu/btnHighScoresSelect.png";
             this.options.settings.src = "img/menu/btnSettings.png";
             this.options.exit.src = "img/menu/btnExit.png";
         } else if (this.selected == 2) {
-            this.options.start.src = "img/menu/btnStart.png";
+            this.options.start.src = "img/menu/btnStart1.png";
             this.options.highscores.src = "img/menu/btnHighScores.png";
             this.options.settings.src = "img/menu/btnSettingsSelect.png";
             this.options.exit.src = "img/menu/btnExit.png";
         } else if (this.selected == 3) {
-            this.options.start.src = "img/menu/btnStart.png";
+            this.options.start.src = "img/menu/btnStart1.png";
             this.options.highscores.src = "img/menu/btnHighScores.png";
             this.options.settings.src = "img/menu/btnSettings.png";
             this.options.exit.src = "img/menu/btnExitSelect.png";
