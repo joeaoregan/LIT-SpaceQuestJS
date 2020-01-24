@@ -43,8 +43,8 @@ class HUD extends GameObject {
         }
         ctx.strokeStyle = "#FFF";
     }
-    
-    mouseClick() {
+
+    pressedPause() {
         if (controller.mouse.x > this.menu.x
             && controller.mouse.x < this.menu.x + this.menu.w
             && controller.mouse.y > this.menu.y
@@ -54,6 +54,18 @@ class HUD extends GameObject {
             // game.paused = !game.paused;
             game.pause();
             controller.mouse.x = controller.mouse.y = 0;
+        }
+        // return false;
+    }
+
+    pressedMenu() {
+        if (controller.mouse.x > this.menu.x
+            && controller.mouse.x < this.menu.x + this.menu.w
+            && controller.mouse.y > this.menu.y
+            && controller.mouse.y < this.menu.y + this.menu.h) {
+            controller.btn.menu = !controller.btn.menu;
+            controller.mouse.x = controller.mouse.y = 0;
+            game.pause();
         }
         // return false;
     }
@@ -76,6 +88,7 @@ class HUD extends GameObject {
         this.menu.x = canvas.width - this.textWidth - PANEL_X - 4;
         // this.me-uHover("");
         this.menuHover();
+        this.pressedMenu();
         ctx.fillText(MENU_ICON, (canvas.width - this.textWidth - PANEL_X), BOTTOM_PANEL_Y);
         ctx.strokeText(MENU_ICON, (canvas.width - this.textWidth - PANEL_X), BOTTOM_PANEL_Y);
         // ctx.strokeStyle = "#FFF";
@@ -87,9 +100,8 @@ class HUD extends GameObject {
         // this.menuHover("pause");
         this.menuHover();
 
-
         // game.paused = 
-        this.mouseClick();
+        this.pressedPause();
 
 
         ctx.fillText(PAUSE_ICON, (canvas.width - this.textWidth - PANEL_X - 50), BOTTOM_PANEL_Y);

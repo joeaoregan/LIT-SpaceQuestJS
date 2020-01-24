@@ -80,7 +80,8 @@ window.addEventListener('keydown', function (e) {
             break;
         case 77: // Esc
             controller.btn.menu = !controller.btn.menu; // toggle on/off
-            game.paused = !game.paused; // toggle the game paused
+            //game.paused = !game.paused; // toggle the game paused
+            //game.pause();
             e.preventDefault();
             // this.console.log("menu");
             break;

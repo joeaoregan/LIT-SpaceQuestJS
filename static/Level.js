@@ -50,12 +50,20 @@ class Level extends State {
 
     draw() {
         this.objects.forEach(obj => obj.draw());
+        this.menu();
+    }
+
+    menu() {
         if (controller.btn.menu) {
+            game.paused = true;
             console.log("menu pressed");
             // Menu.prototype.update.call(this);
             // Menu.prototype.update();
             menu.draw();
-        }
+        } 
+        // else {
+        //     game.paused = false;
+        // }
     }
 
     update() {
