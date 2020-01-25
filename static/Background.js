@@ -10,6 +10,10 @@ class Background extends GameObject {
         this.dx = 2;
         this.bg1 = new Image();
         this.bg1.src = "img/bg/BG1080p.png";
+        this.bg1.width = 1280;
+        this.bg1.height = 720;
+        this.bg1x = 0;
+        this.bg1y = 0;
     }
 
     init() {
@@ -18,7 +22,7 @@ class Background extends GameObject {
     }
 
     draw() {
-        ctx.drawImage(this.bg1, 0, 0, 1280, 720); // Background
+        ctx.drawImage(this.bg1, this.bg1x, this.bg1y, this.bg1.width, this.bg1.height); // Background
         ctx.drawImage(this.sprite, this.x, this.y, this.w, this.h); // Scrolling Dust Cloud
         ctx.drawImage(this.sprite, this.x + this.w, this.y, this.w, this.h);
     }

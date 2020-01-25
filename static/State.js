@@ -3,7 +3,8 @@ class State {
         this.objects = [];
         this.time = 0;
         this.endTime = 2;
-        this.bg = new Background("img/bg/bg_front_spacedust.png", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+        this.bg = new Background("img/bg/bg_front_spacedust.png", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);        
+        this.scale=1.0;
 
         setInterval(
             this.timer.bind(this),
@@ -25,6 +26,7 @@ class State {
 
     draw() {
         // console.log("state draw");
+        this.bg.bg1.
         this.objects.forEach(obj => obj.draw());
     }
 
