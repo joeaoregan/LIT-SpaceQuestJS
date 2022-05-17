@@ -1,50 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="author" content="Joe O'Regan" />
+    <meta
+      property="og:image"
+      content="https://raw.githubusercontent.com/joeaoregan/LIT-Yr4-PlatformGameDevelopment/master/Screenshots/SpaceGame1SplashScreenNEW.png"
+    />
+    <title>Space Quest JS</title>
 
-<head>
-	<meta charset="UTF-8">
-	<title>Space Quest JS</title>
+    <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 
-	<!--[if lt IE 9]>
-		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->
+    <link href="css/styles.css" rel="stylesheet" />
+  </head>
 
-	<link href="css/styles.css" rel="stylesheet" />
-</head>
+  <body>
+    <h1>Space Quest JavaScript</h1>
 
-<body>
-	<h1>Space Quest JavaScript</h1>
+    <div>
+      <canvas id="spacequest" width="1280" height="720"></canvas>
+    </div>
 
-	<div>
-		<canvas id="spacequest" width="1280" height="720"></canvas>
-	</div>
-
-	<div>
-		<h1>Info</h1>
-		<h2>Press Space to start</h2>
-		<ul>
-			<li><b>Menu</b>: asdw + arrow keys</li>
-			<li><b>Fire/Select Menu Option</b>: space</li>
-			<li><b>Pause</b>: Esc / P</li>
-			<li><b>M</b>: menu (not working yet)</li>
-			<li><b>Health</b>: 10, <b>Lives</b>: 3</li>
-			<li>Different enemy ships added each level</li>
-			<li>4 levels</li>
-		</ul>
-	</div>
-	<script src="Controller.js"></script>
-	<script src="GameObject.js"></script>
-	<script src="HUD.js"></script>
-	<script src="Enemy.js"></script>
-	<script src="Asteroid.js"></script>
-	<script src="Background.js"></script>
-	<script src="Laser.js"></script>
-	<script src="Player.js"></script>
-	<script src="State.js"></script>
-	<script src="Splash.js"></script>
-	<script src="Menu.js"></script>
-	<script src="Level.js"></script>
-	<script src="Game.js"></script>
-</body>
-
+    <div>
+      <h1>Info</h1>
+      <h2>Press Space to start</h2>
+      <ul>
+        <li><b>Menu</b>: asdw + arrow keys</li>
+        <li><b>Fire/Select Menu Option</b>: space</li>
+        <li><b>Pause</b>: Esc / P</li>
+        <li><b>M</b>: menu (not working yet)</li>
+        <li><b>Health</b>: 10, <b>Lives</b>: 3</li>
+        <li>Different enemy ships added each level</li>
+        <li>4 levels</li>
+      </ul>
+    </div>
+    <script src="Controller.js"></script>
+    <script src="GameObject.js"></script>
+    <script src="HUD.js"></script>
+    <script src="Enemy.js"></script>
+    <script src="Asteroid.js"></script>
+    <script src="Background.js"></script>
+    <script src="Laser.js"></script>
+    <script src="Player.js"></script>
+    <script src="State.js"></script>
+    <script src="Splash.js"></script>
+    <script src="Menu.js"></script>
+    <script src="Level.js"></script>
+    <script src="Game.js"></script>
+  </body>
 </html>
