@@ -11,7 +11,7 @@ socketio = require('socket.io');
 var port = process.env.PORT || 3000;
 var app = express();
 var server = http.createServer(app);
-var io = require('socket.io').listen(server);
+var io = require('socket.io')(server);
 /*
 require('dns').lookup(require('os').hostname(), function (err, add, fam) {
 	console.log('addr: ' + add);
