@@ -4,14 +4,13 @@
 	17/01/2020
 	Space Quest - Server
 */
-const express = require('express'),
-	http = require('http');
+const express = require('express');
 socketio = require('socket.io');
 
-var port = process.env.PORT || 3000;
-var app = express();
-var server = http.createServer(app);
-var io = require('socket.io')(server);
+const port = process.env.PORT || 3000;
+const app = express();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
 /*
 require('dns').lookup(require('os').hostname(), function (err, add, fam) {
 	console.log('addr: ' + add);
@@ -19,86 +18,22 @@ require('dns').lookup(require('os').hostname(), function (err, add, fam) {
 	console.log('fam: ' + fam);
 });
 */
+console.log(
+	`   _________                         ________                          __   
+  /   _____/__________    ____  ____ \\_____  \\  __ __   ____   _______/  |_ 
+  \\_____  \\\\____ \\__  \\ _/ ___\\/ __ \\ /  / \\  \\|  |  \\_/ __ \\ /  ___/\\   __\\
+  /        \\  |_> > __ \\\\  \\__\\  ___//   \\_/.  \\  |  /\\  ___/ \\___ \\  |  |  
+ /_______  /   __(____  /\\___  >___  >_____\\ \\_/____/  \\___  >____  > |__|  
+         \\/|__|       \\/     \\/    \\/       \\__>           \\/     \\/        `);
 
-var os = require('os');
+const os = require('os');
 console.log("Platform: " + os.platform() + " Architecture: " + os.arch() + " Hostname: " + os.hostname());
-var dns = require('dns');
-var address;
-var addr=dns.lookup(os.hostname(), function(err,add,fam){
-	console.log("Server running on " +add+":"+ port);
-	//address=add;
-});
-//console.log(addr);
+const dns = require('dns');
 
+let addr=dns.lookup(os.hostname(), function(err,add,fam){
+	console.log("Server running on " +add+":"+ port);
+});
 
 app.use(express.static('static'));
-
-var users = [];
-
-//console.log("Server running on " +address+":"+ port);
-//console.log("address: " + address);
-
-io.on('connection', (socket) => {
-	//socket.broadcast.emit('user.events', {name: 'system', message: 'Someone has joined!'});
-	console.log('New User Connected');
-
-	socket.on('newuser', (data) => {
-		console.log('new connection from ');
-
-		var nameExists = false;
-
-		for (var i = 0; i < users.length; i++) {
-			if (users[i] == data.name) {
-				nameExists = true;
-				break;
-			}
-		}
-
-		if (!nameExists) {
-			users.push(data.name);
-		}
-
-		console.log('Current Users (' + users.length + '): ' + users);
-		socket.broadcast.emit('user.events', { name: 'system', message: 'User: ' + data.name + ' has joined the chat. Users: ' + users.length });
-
-		io.emit('update-user-list', users);
-	});
-
-	socket.on('updateuser', (data) => {
-		var nameChanged = false;
-
-		for (var i = 0; i < users.length; i++) {
-			if (users[i] == data.oldname) {
-				users[i] = data.newname;
-				nameChanged = true;
-				break;
-			}
-		}
-
-		if (nameChanged) {
-			console.log('User: ' + data.oldname + ' is now "' + data.newname + '"');
-			console.log('Current Users (' + users.length + '): ' + users);
-			socket.broadcast.emit('user.events', { name: 'system', message: 'User: ' + data.oldname + ' is now "' + data.newname + '"' });
-
-
-
-
-			io.emit('update-user-list', users);
-		}
-	});
-
-	socket.on('message', (data) => {
-		console.log(data.name, 'says', data.message);
-		socket.broadcast.emit('message', data);	// broadcast to everyone except this
-	});
-
-	socket.on('disconnect', function () {
-		console.log('User has disconnected / reset connection');
-
-		if (users.length > 0) {
-			socket.broadcast.emit('user.events', { name: 'system', message: 'Someone has left the chat!' });
-		}
-	});
-});
 
 server.listen(port);
