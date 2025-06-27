@@ -6,3 +6,9 @@
 # folders
 node_modules/
 static/assets/
+docs/assets/
+coverage/
+
+# Inevitable render package-lock yarn warning
+
+.package-lock.json
