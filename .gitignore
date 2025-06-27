@@ -11,4 +11,4 @@ coverage/
 
 # Inevitable render package-lock yarn warning
 
-.package-lock.json
+package-lock.json
